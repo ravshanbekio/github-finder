@@ -44,4 +44,4 @@ async def extract_data(message: types.Message):
             await message.answer(f'✅The code was loaded successfully  \n\nhttps://github.com/{result_link}')
 
 if __name__ == '__main__':
-    executor.start_polling(dp, skip_updates=True)
+    executor.start_polling(dp, skip_updates=True) 
