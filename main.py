@@ -33,15 +33,10 @@ async def extract_data(message: types.Message):
         url = f'https://github.com/{topic_link}'
         download_storage = requests.get(f'{url}').text
         soup = BeautifulSoup(download_storage)
-        download_block = soup.find('span', class_='d-none d-md-flex ml-2')
-        code = soup.find_all('li',class_='Box-row Box-row--hover-gray p-0')
-
-        for kod in code:
-            result_link = kod.find('a', class_='d-flex flex-items-center color-text-primary text-bold no-underline p-3').get('href')
-            file_bytes = requests.get(f'https://github.com/{result_link}').content
-            with open(f"codes/{domain}.zip",'wb') as file:
-                file.write(file_bytes)
-            await message.answer(f'✅The code was loaded successfully  \n\nhttps://github.com/{result_link}')
+        kod = soup.find_all('div',target_='get-repo.modal')
+        code = kod.find('a',class_='d-flex flex-items-center color-fg-default text-bold no-underline').get('href')
+        print(code)
+        await message.answer(f'✅The code was loaded successfully  \n\nhttps://github.com/{code}')
 
 if __name__ == '__main__':
     executor.start_polling(dp, skip_updates=True)
